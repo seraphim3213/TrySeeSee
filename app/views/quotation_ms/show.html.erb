@@ -1,0 +1,56 @@
+<%= render "common/navbar" %>
+<div class="container theme-showcase">		
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h4>QuotationNo:<%= @quotationM.quotation_no %></h4>
+		</div>
+		<div class="panel-body">
+			Quotation Date:<%=@quotationM.quotation_date.strftime("%F") %><br>
+			Customer:<%=@quotationM.customer%><br>
+			Customer Factory:<%=@quotationM.customer_factory%>			
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th class="col-md-1">#</th>
+						<th class="col-md-2">Customer Part#</th>
+						<th class="col-md-2"><div class='text-right'>Quantity</div></th>
+						<th class="col-md-2"><div class='text-right'>Unit Price</div></th>
+						<th class="col-md-2"><div class='text-right'>Total</div></th>
+					</tr>
+				</thead>		
+				<tbody>
+					<% @sub_total = 0 %>
+					<% @quotationDs.each_with_index do |quotationD, i| %>
+					<% @total = quotationD.unit_price * quotationD.quantity%>
+					<% @sub_total = @sub_total + @total%>
+					<tr>
+						<td><%= i+1%></td>
+						<td><%= quotationD.customer_part_no %></td>
+						<td><div class='text-right'><%= quotationD.quantity %></div></td>
+						<td><div class='text-right'><%= quotationD.unit_price %></div></td>
+						<td><div class='text-right'><%= @total %></div></td>
+					</tr>
+					<% end %>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="4"></td>
+						<td><div class='text-right'>sub total:  <%= @sub_total%></div></td>
+					</tr>
+					<tr>
+						<td><div class='text-right'>Shipment:</div></td>
+						<td><%= @quotationM.shipment %></td>
+					</tr>
+					<tr>
+						<td><div class='text-right'>Payment:</div></td>
+						<td><%= @quotationM.payment %></td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+	<div>
+		<%= link_to 'Back to index', quotation_ms_path(:page => params[:page]), method: :get, :class => "btn btn-primary" %>
+	</div>
+<div>
+<%= render "common/footer" %>
