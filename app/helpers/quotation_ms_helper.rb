@@ -1,3 +1,0 @@
-module QuotationMsHelper
-	
-end
