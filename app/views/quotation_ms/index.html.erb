@@ -1,0 +1,37 @@
+<%= render "common/navbar" %>
+<div class="container theme-showcase">
+	<div>
+		<%= paginate @quotationMs %>
+	</div>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th class="col-md-1">#</th>
+				<th class="col-md-2">Quotation#</th>
+				<th class="col-md-2">Customer</th>
+				<th class="col-md-2">BBB</th>
+				<th class="col-md-2">CCC</th>
+				<th class="col-md-1" colspan="3" align="right"></th>
+			</tr>
+		</thead>		
+		<tbody>
+			<% @quotationMs.each_with_index do |quotationM, i| %>
+			<tr>
+				<td><%= i+1%></td>
+				<td><%= quotationM.quotation_no %></td>
+				<td><%= quotationM.customer %></td>
+				<td></td>
+				<td></td>
+				<td><%= link_to 'Show', quotation_m_path(quotationM.id, :page => params[:page]) %></td>
+				<td><%= link_to 'Edit', edit_quotation_m_path(quotationM.id, :page => params[:page]) %></td>
+				<td><%= link_to 'Delete', quotation_m_path(quotationM.id, :page => params[:page]), method: :delete,  data: { confirm: "Are you sure?" }  %></td>
+			</tr>
+			<% end %>
+		</tbody>
+	</table>
+
+	<div>
+		<%= link_to "New Quotation", new_quotation_m_path, method: :get, :class => "btn btn-primary" %>
+	</div>
+</div>
+<%= render "common/footer" %>
